@@ -121,16 +121,14 @@ Bu yaklaşım, tek bir model yerine
 
 ---
 
-## 📁 Proje Yapısı ve Ekip
+## 📁 Proje Yapısı ve Ekip Katkıları
 
-Proje üç ekip üyesi tarafından yürütülmüştür ve
-her üye kendi Jupyter Notebook dosyasında çalışmıştır:
+| Üye       | Katkılar |
+|-----------|----------|
+| **Wisam** | Feature Engineering, PCA, Logistic Regression, RandomForest + SMOTETomek, XGBoost, Two-Stage System (RF/LR → XGBoost), Threshold Tuning, Alternative Paths (Single XGBoost, Balanced XGBoost) |
+| **Mustafa** | Two-Stage Classification System, RandomForest + SMOTETomek, Threshold Tuning (Stage 1 & Stage 2), XGBoost, Precision–Recall Curve Analysis, Aggressive vs Balanced System Comparison, Confusion Matrix Evaluation |
+| **Cüneyd** | Baseline Model Benchmarking (ComplementNB, LR-balanced, SGD, LinearSVC, GaussianNB, KNN, DecisionTree, RandomForest, PassiveAggressive), ComplementNB Tuning (alpha), Chi² + SelectKBest, PCA, Two-Stage System (CNB_score → LR-balanced), Zone / Adaptive Multi-Stage Decision System, Precision–Recall & Threshold Analysis |
 
-| Üye         | Katkılar                                         |
-| ----------- | ------------------------------------------------ |
-| **Wisam**   | Feature Engineering, PCA, Logistic Regression    |
-| **Mustafa** | KNN, GaussianNB, Threshold Analizi               |
-| **Cüneyd**  | Baz Modeller, Logistic Regression, Decision Tree |
 
 **Grup Adı:** DigitalNomads
 
