@@ -1,101 +1,142 @@
-📊 MentalHealthPredict – Depresyon ve Ruhsal Hastalık Geçmişinin Tahmini
+# 📊 Psikolojik Sağlık Geçmişi Sınıflandırma Sistemi
 
-Bu proje, bireylerin **depresyon ve ruhsal hastalık geçmişini** (History of Mental Illness – 0/1) tahmin etmek amacıyla veri madenciliği ve makine öğrenmesi yöntemlerinin karşılaştırıldığı bir sınıflandırma çalışmasıdır.
-Veri seti 413.768 gözlem ve 15 özellikten oluşmaktadır.
+**Veri Madenciliği Dersi – Digital Nomads**
 
-Proje kapsamında:
+Bu proje, bireylerin **depresyon ve ruhsal hastalık geçmişine sahip olup olmadığını**
+(**History of Mental Illness – 0 / 1**) tahmin etmeyi amaçlayan
+**ikili sınıflandırma (Binary Classification)** problemine odaklanmaktadır.
 
-* Veri ön işleme
-* Özellik seçimi (Chi², MI, VarianceThreshold, SelectKBest)
-* Boyut indirgeme (PCA)
-* Farklı sınıflandırma modelleri
-* Model performans karşılaştırmaları
+Çalışmada, **davranışsal, yaşam tarzı ve sosyo-ekonomik veriler** kullanılarak
+veri madenciliği ve makine öğrenmesi yöntemlerinin performansı analiz edilmiştir.
 
-gerçekleştirilmiştir.
-
----
-
-📁 Proje Yapısı
-
-Proje üç ekip üyesi tarafından yürütülmüştür ve her üye kendi Jupyter Notebook dosyasında aşağıdaki modelleri geliştirmiştir:
-
-| Üye         | Görevler ve Modeller                                     |
-| ----------- | -------------------------------------------------------- |
-| **Wisam**   | Feature Selection, PCA, Logistic Regression              |
-| **Mustafa** | KNN, GaussianNB, SelectKBest, PCA                        |
-| **Cüneyd**  | Logistic Regression & Decision Tree + Mutual Information |
-
-Tüm üyeler veri ön işleme, model oluşturma ve görselleştirme adımlarını kendi defterlerinde gerçekleştirmiştir.
+> ⚠️ Bu çalışma **klinik veya tıbbi tanı koyma amacı taşımaz**.
+> Ruh sağlığı alanında **tarama (screening)** ve **karar destek sistemlerinin**
+> akademik olarak nasıl tasarlanabileceğini incelemektedir.
 
 ---
 
-🎯 Projenin Amacı
+## 📊 Veri Seti
+
+* Kaynak: **Kaggle – Depression Dataset (Synthetic)**
+* Toplam gözlem: **413.768**
+* Toplam özellik: **15**
+* Hedef değişken: **History of Mental Illness (0 / 1)**
+
+Veri seti, gerçek hasta verisi içermeyen **sentetik** bir yapıdadır ve
+eğitsel analizler için uygundur.
+
+Kullanılan temel değişkenler:
+
+* Yaş
+* Medeni durum
+* Eğitim seviyesi
+* Çocuk sayısı
+* Sigara kullanımı
+* Fiziksel aktivite
+* Çalışma durumu
+* Yıllık gelir
+
+---
+
+## 🎯 Projenin Amacı
 
 * Ruhsal hastalık geçmişi olan bireyleri sınıflandırmak
-* Özellik seçimi yöntemlerinin model performansına etkisini değerlendirmek
-* PCA’nin boyut indirgeme sonrası doğruluk üzerindeki etkisini incelemek
-* En iyi sonuç veren model ve özellik setini belirlemek
+* Özellik seçimi yöntemlerinin model performansına etkisini incelemek
+* PCA sonrası performans değişimini analiz etmek
+* Sınıf dengesizliği probleminin etkilerini değerlendirmek
+* Tek model yerine **sistem bazlı karar yapısı** geliştirmek
 
 ---
 
-🛠 Kullanılan Yöntemler
+## ⚠️ Temel Problemler
 
-🔹 Veri İşleme
+Veri analizi sonucunda iki ana sınırlayıcı faktör tespit edilmiştir:
+
+* **Sınıf dengesizliği (Class Imbalance)**
+* **Sınıflar arası yüksek benzerlik (Low Separability)**
+
+Bu nedenle:
+
+* Accuracy tek başına yeterli değildir
+* **Recall ve F1-score** metrikleri öncelikli değerlendirilmiştir
+
+---
+
+## 🛠 Kullanılan Yöntemler
+
+### 🔹 Veri Ön İşleme
 
 * Label Encoding
 * Hedef dağılım analizi
 * Outlier incelemesi
 * Eksik değer kontrolü
 
-🔹 Özellik Seçimi
+### 🔹 Özellik Seçimi
 
 * Chi-Square
 * Mutual Information
 * VarianceThreshold
-* SelectKBest (k=10, 30)
+* SelectKBest (k = 10, 30)
 
-🔹 Boyut İndirgeme
+### 🔹 Boyut İndirgeme
 
-* PCA (n_components değişimi ile performans analizi)
+* PCA (farklı `n_components` değerleri ile)
 
-🔹 Kullanılan Modeller
+### 🔹 Kullanılan Modeller
 
 * Logistic Regression
 * Decision Tree Classifier
-* K-Nearest Neighbors
+* K-Nearest Neighbors (KNN)
 * Gaussian Naive Bayes
-* FS + PCA + Model kombinasyonları
+* Özellik seçimi + PCA + Model kombinasyonları
 
 ---
 
-📈 Sonuçların Özeti
+## 🧩 İki Aşamalı Sınıflandırma Yaklaşımı
 
-Genel olarak:
+Gerçek hayattaki tarama sistemlerinden ilham alınarak
+**iki aşamalı bir sınıflandırma yapısı** tasarlanmıştır:
 
-* **AUC** değerleri en yüksek LR + MI ve GaussianNB modellerinde görülmüştür.
-* **F1 skorları** sınıf dengesizliği nedeniyle düşüktür.
-* PCA bazı modellerde performansı artırmazken bazı modellerde küçük iyileşme sağlamıştır.
-* Özellik seçimi bazı durumlarda overfitting’i azaltmıştır.
+**Aşama 1**
 
----
+* Düşük threshold
+* Amaç: Potansiyel vakaları kaçırmamak
 
-📉 Confusion Matrix Görselleri
+**Aşama 2**
 
-Her notebook dosyasında tüm modeller için Confusion Matrix grafikleri oluşturulmuştur.
+* Recall ve Precision dengesi
+* Threshold istatistiksel olarak belirlenmiştir
 
----
-
-🧠 Ekip
-
-* **Wisam**
-* **Mustafa**
-* **Cüneyd**
-
-Grup Adı: **DigitalNomads**
+Bu yaklaşım, tek bir model yerine
+**sistem bazlı karar verme anlayışını** yansıtır.
 
 ---
 
-🧰 Kullanılan Teknolojiler
+## 📈 Sonuçların Özeti
+
+* Baz modellerde Recall sistematik olarak düşüktür
+* Sınıf dengesizliği temel sınırlayıcı faktördür
+* PCA bazı modellerde sınırlı iyileşme sağlamıştır
+* Performans sınırları modelden çok **verinin doğasından** kaynaklanmaktadır
+
+---
+
+## 📁 Proje Yapısı ve Ekip
+
+Proje üç ekip üyesi tarafından yürütülmüştür ve
+her üye kendi Jupyter Notebook dosyasında çalışmıştır:
+
+| Üye         | Katkılar                                         |
+| ----------- | ------------------------------------------------ |
+| **Wisam**   | Feature Engineering, PCA, Logistic Regression    |
+| **Mustafa** | KNN, GaussianNB, Threshold Analizi               |
+| **Cüneyd**  | Baz Modeller, Logistic Regression, Decision Tree |
+
+**Grup Adı:** DigitalNomads
+
+---
+
+## 🧰 Kullanılan Teknolojiler
 
 * Python 3.x
 * Pandas, NumPy
@@ -105,19 +146,19 @@ Grup Adı: **DigitalNomads**
 
 ---
 
-🔧 Nasıl Çalıştırılır?
+## 🔧 Nasıl Çalıştırılır?
 
 ```bash
 git clone <repo-link>
-cd MentalHealthPredict
+cd PsikolojikSaglikGecmisi_SiniflandirmaSistemi
 jupyter notebook
 ```
 
-Notebook dosyalarından herhangi birini açarak modeli çalıştırabilirsiniz.
+Notebook dosyalarından herhangi biri açılarak çalışmalar incelenebilir.
 
+---
 
-📄 Lisans
+## 📄 Lisans
 
-Bu proje yalnızca **akademik amaçlıdır**; ticari kullanım yasaktır.
-
-
+Bu proje **yalnızca akademik amaçlıdır**.
+Ticari kullanım için uygun değildir.
